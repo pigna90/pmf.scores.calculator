@@ -11,11 +11,11 @@
     </title>
  
     <style>
- 
+ 		
         /* Styling the Body element i.e. Color,
         Font, Alignment */
         body {
-            background-color: #43695b;
+            background-color: #F7F6DC;
             font-family: Verdana;
             text-align: center;
         }
@@ -27,6 +27,20 @@
             margin: 50px auto;
             padding: 30px 20px;
             box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .results {
+        	background-color: #fff;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px 20px;
+            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .div-button {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px 20px;
         }
  
         /* Styling form-control Class */
@@ -64,15 +78,15 @@
  
         /* Styling Button */
         button {
-            background-color: #bf5700;
+            background-color: #7FB77E;
             border: 1px solid #777;
             border-radius: 3px;
             font-family: inherit;
             font-size: 22px;
             display: block;
             width: 100%;
-            margin-top: 50px;
-            margin-bottom: 40px;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
 
         button:active {
@@ -139,19 +153,16 @@
                        name="recommed">D</input>
             </label>
         </div>
-  
-        <!-- Multi-line Text Input Control -->
+
         <button type="submit" value="submit" onclick="computeScores();  return false;">
             Calcola
         </button>
 
-        <p id="score1"></p>
-    	<p id="score2"></p>
-    	<p id="score3"></p>
-    	<p id="score4"></p>
-    	<p id="score5"></p>
-
     </form>
+
+    <div class="results">
+        <p id="score1"></p> <p id="score2"></p> <p id="score3"></p> <p id="score4"></p> <p id="score5"></p>
+    </div>
 
     <script src="js/script.js"></script>
 
