@@ -66,14 +66,23 @@
         button {
             background-color: #bf5700;
             border: 1px solid #777;
-            border-radius: 2px;
+            border-radius: 3px;
             font-family: inherit;
-            font-size: 21px;
+            font-size: 22px;
             display: block;
             width: 100%;
             margin-top: 50px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
+
+        button:active {
+		  background: #e5e5e5;
+		  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+		     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+		          box-shadow: inset 0px 0px 5px #c1c1c1;
+		   outline: none;
+		}
+
     </style>
 </head>
   
@@ -132,10 +141,20 @@
         </div>
   
         <!-- Multi-line Text Input Control -->
-        <button type="submit" value="submit">
+        <button type="submit" value="submit" onclick="computeScores();  return false;">
             Calcola
         </button>
+
+        <p id="score1"></p>
+    	<p id="score2"></p>
+    	<p id="score3"></p>
+    	<p id="score4"></p>
+    	<p id="score5"></p>
+
     </form>
+
+    <script src="js/script.js"></script>
+
 </body>
   
 </html>
