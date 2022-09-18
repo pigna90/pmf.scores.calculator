@@ -49,7 +49,7 @@
             <label>
                 <input type="radio"
                        id="cs-na"
-                       name="cs">NA</input>
+                       name="cs" checked>NA</input>
             </label>
         </div>
 
@@ -72,7 +72,7 @@
             <label>
                 <input type="radio"
                        id="rbc-na"
-                       name="rbc">NA</input>
+                       name="rbc" checked>NA</input>
             </label>
         </div>
 
@@ -95,7 +95,7 @@
             <label>
                 <input type="radio"
                         id="knf-na"
-                        name="knf">NA</input>
+                        name="knf" checked>NA</input>
             </label>
         </div>
 
@@ -118,7 +118,7 @@
             <label>
                 <input type="radio"
                         id="mmud-na"
-                        name="mmud">NA</input>
+                        name="mmud" checked>NA</input>
             </label>
         </div>
 
@@ -158,7 +158,7 @@
   
         <div class="form-control">
             <label class="label-name">
-                WBC > 25x10^9/l:
+                WBC > 25x10<sup>9</sup>/l:
             </label>
  
             <!-- Input Type Radio Button -->
@@ -175,7 +175,7 @@
             <label>
                 <input type="radio"
                        id="wbc-na"
-                       name="wbc">NA</input>
+                       name="wbc" checked>NA</input>
             </label>
         </div>
 
@@ -193,7 +193,7 @@
 
         <div class="form-control">
             <label class="label-name">
-                PLT (l):
+                PLT (10<sup>9</sup>/l):
             </label>
  
             <!-- Input Type Text -->
@@ -225,7 +225,7 @@
             <label>
                 <input type="radio"
                        id="type1-na"
-                       name="type1">NA</input>
+                       name="type1" checked>NA</input>
             </label>
         </div>
   
@@ -248,7 +248,7 @@
             <label>
                 <input type="radio"
                        id="calr-na"
-                       name="calr">NA</input>
+                       name="calr" checked>NA</input>
             </label>
         </div>
     </form>
@@ -273,7 +273,7 @@
             <label>
                 <input type="radio"
                        id="hmr-na"
-                       name="hmr">NA</input>
+                       name="hmr" checked>NA</input>
             </label>
         </div>
   
@@ -295,7 +295,7 @@
             <label>
                 <input type="radio"
                        id="hmr2-na"
-                       name="hmr2">NA</input>
+                       name="hmr2" checked>NA</input>
             </label>
         </div>
 
@@ -317,7 +317,7 @@
             <label>
                 <input type="radio"
                        id="u2-na"
-                       name="u2">NA</input>
+                       name="u2" checked>NA</input>
             </label>
         </div>
 
@@ -339,7 +339,7 @@
             <label>
                 <input type="radio"
                        id="as-na"
-                       name="as">NA</input>
+                       name="as" checked>NA</input>
             </label>
         </div>
     </form>
@@ -348,7 +348,7 @@
     <form id="form">
         <div class="form-control">
             <label class="label-name">
-                Unfavourable by DIPSS1<sup>1</sup>:
+                Unfavourable by DIPSS<sup>1</sup>:
             </label>
             <!-- Input Type Radio Button -->
             <label>
@@ -364,13 +364,13 @@
             <label>
                 <input type="radio"
                        id="dip-na"
-                       name="dip">NA</input>
+                       name="dip" checked>NA</input>
             </label>
         </div>
   
         <div class="form-control">
             <label class="label-name">
-                Unfavourable by MIPSS70 plus v. 2.02<sup>2</sup>:
+                Unfavourable by MIPSS70 plus v. 2.0<sup>2</sup>:
             </label>
             <!-- Input Type Radio Button -->
             <label>
@@ -386,13 +386,13 @@
             <label>
                 <input type="radio"
                        id="unmip-na"
-                       name="unmip">NA</input>
+                       name="unmip" checked>NA</input>
             </label>
         </div>
 
         <div class="form-control">
             <label class="label-name">
-                Very high-risk by MIPSS70 plus v. 2.03<sup>3</sup>:
+                Very high-risk by MIPSS70 plus v. 2.0<sup>3</sup>:
             </label>
             <!-- Input Type Radio Button -->
             <label>
@@ -408,7 +408,7 @@
             <label>
                 <input type="radio"
                        id="vmip-na"
-                       name="vmip">NA</input>
+                       name="vmip" checked>NA</input>
             </label>
         </div>
         <div class="div-references">
@@ -441,7 +441,7 @@
             <label>
                 <input type="radio"
                        id="bmf-na"
-                       name="bmf">NA</input>
+                       name="bmf" checked>NA</input>
             </label>
         </div>
     </form>
@@ -452,11 +452,11 @@
     
     <p class="p-title">Risk category (score), survival</p>
     <div class="results">
-        <label class="label-name">DIPSS: </label> <p style="display:inline" id="score1">-</p> <br><br>
-        <label class="label-name">DIPSS-Plus: </label> <p style="display:inline" id="score2">-</p> <br><br>
-        <label class="label-name">MIPSS70: </label> <p style="display:inline" id="score3">-</p> <br><br>
-        <label class="label-name">MIPSS70 plus version 2.0: </label> <p style="display:inline" id="score4">-</p> <br><br>
-        <label class="label-name">MTSS: </label> <p style="display:inline" id="score5">-</p> 
+        <label class="label-name">DIPSS: </label> <p style="display:inline" id="dipss">-</p> <br><br>
+        <label class="label-name">DIPSS-Plus: </label> <p style="display:inline" id="dipss-plus">-</p> <br><br>
+        <label class="label-name">MIPSS70: </label> <p style="display:inline" id="mips">-</p> <br><br>
+        <label class="label-name">MIPSS70 plus version 2.0: </label> <p style="display:inline" id="mips-plus">-</p> <br><br>
+        <label class="label-name">MTSS: </label> <p style="display:inline" id="mtss">-</p> 
     </div>
 
     <script src="js/script.js"></script>
