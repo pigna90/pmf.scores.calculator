@@ -9,215 +9,454 @@
     <title>
         Prognostici Score
     </title>
- 
-    <style>
- 		
-        /* Styling the Body element i.e. Color,
-        Font, Alignment */
-        body {
-            background-color: #F7F6DC;
-            font-family: Verdana;
-            text-align: center;
-        }
- 
-        /* Styling the Form (Color, Padding, Shadow) */
-        form {
-            background-color: #fff;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px 20px;
-            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .results {
-        	background-color: #fff;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px 20px;
-            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .div-button {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px 20px;
-        }
- 
-        /* Styling form-control Class */
-        .form-control {
-            text-align: left;
-            margin-bottom: 25px;
-        }
- 
-        /* Styling form-control Label */
-        .form-control label {
-            display: block;
-            margin-bottom: 10px;
-        }
- 
-        /* Styling form-control input,
-        select, textarea */
-        .form-control input,
-        .form-control select,
-        .form-control textarea {
-            border: 1px solid #777;
-            border-radius: 2px;
-            font-family: inherit;
-            padding: 10px;
-            display: block;
-            width: 95%;
-        }
- 
-        /* Styling form-control Radio
-        button and Checkbox */
-        .form-control input[type="radio"],
-        .form-control input[type="checkbox"] {
-            display: inline-block;
-            width: auto;
-        }
- 
-        /* Styling Button */
-        button {
-            background-color: #7FB77E;
-            border: 1px solid #777;
-            border-radius: 3px;
-            font-family: inherit;
-            font-size: 22px;
-            display: block;
-            width: 100%;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-
-        button:active {
-		  background: #e5e5e5;
-		  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-		     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-		          box-shadow: inset 0px 0px 5px #c1c1c1;
-		   outline: none;
-		}
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
   
 <body>
     <h1>Prognostici Score</h1>
   
     <!-- Create Form -->
-    <p>Sezione 1</p>
+    <p class="p-title">Clinical Features</p>
     <form id="form">
         <div class="form-control">
-            <label for="age" id="label-age">
-                Età
+            <label class="label-name">
+                Age (y):
             </label>
  
             <!-- Input Type Text -->
-            <input type="text"
+            <input type="number"
                    id="age"
-                   placeholder="Enter your age" />
+                   placeholder="Years"
+                   min="0" max="150" />
         </div>
   
         <div class="form-control">
-            <label for="role" id="label-role">
-                Professione
-            </label>
-             
-            <!-- Dropdown options -->
-            <select name="role" id="role">
-                <option value="student">Student</option>
-                <option value="professional">
-                    Professional
-                </option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-  
-        <div class="form-control">
-            <label>
-                Sesso:
+            <label class="label-name">
+                Constitutional Symptoms:
             </label>
  
             <!-- Input Type Radio Button -->
-            <label for="recommed-1">
+            <label>
                 <input type="radio"
-                       id="recommed-1"
-                       name="recommed">M</input>
+                       id="cs-yes"
+                       name="cs">Yes</input>
             </label>
-            <label for="recommed-2">
+            <label>
                 <input type="radio"
-                       id="recommed-2"
-                       name="recommed">F</input>
+                       id="cs-no"
+                       name="cs">No</input>
             </label>
-            <label for="recommed-3">
+            <label>
                 <input type="radio"
-                       id="recommed-3"
-                       name="recommed">D</input>
+                       id="cs-na"
+                       name="cs">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                RBC transfusions need:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="rbc-yes"
+                       name="rbc">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="rbc-no"
+                       name="rbc">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="rbc-na"
+                       name="rbc">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                Karnofsky <90%:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="knf-yes"
+                       name="knf">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                        id="knf-no"
+                        name="knf">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                        id="knf-na"
+                        name="knf">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                MMUD:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="mmud-yes"
+                       name="mmud">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                        id="mmud-no"
+                        name="mmud">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                        id="mmud-na"
+                        name="mmud">NA</input>
             </label>
         </div>
 
     </form>
 
-    <p>Sezione 2</p>
+    <p class="p-title">Complete Blood Count</p>
     <form id="form">
         <div class="form-control">
-            <label for="age" id="label-age">
-                Età
+            <label class="label-name" for="age" id="label-age">
+                Hb (g/dl):
             </label>
  
             <!-- Input Type Text -->
-            <input type="text"
-                   id="age"
-                   placeholder="Enter your age" />
+            <input type="number"
+                   id="hb"
+                   placeholder="g/dl"
+                   min="0" max="150" />
         </div>
-  
+
         <div class="form-control">
-            <label for="role" id="label-role">
-                Professione
-            </label>
-             
-            <!-- Dropdown options -->
-            <select name="role" id="role">
-                <option value="student">Student</option>
-                <option value="professional">
-                    Professional
-                </option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-  
-        <div class="form-control">
-            <label>
-                Sesso:
+            <label class="label-name">
+                Gender:
             </label>
  
             <!-- Input Type Radio Button -->
-            <label for="recommed-1">
+            <label>
                 <input type="radio"
-                       id="recommed-1"
-                       name="recommed">M</input>
+                       id="gender-male"
+                       name="gender">Male</input>
             </label>
-            <label for="recommed-2">
+            <label>
                 <input type="radio"
-                       id="recommed-2"
-                       name="recommed">F</input>
+                       id="gender-female"
+                       name="gender">Female</input>
             </label>
-            <label for="recommed-3">
+        </div>
+  
+        <div class="form-control">
+            <label class="label-name">
+                WBC > 25x10^9/l:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label>
                 <input type="radio"
-                       id="recommed-3"
-                       name="recommed">D</input>
+                       id="wbc-yes"
+                       name="wbc">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="wbc-no"
+                       name="wbc">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="wbc-na"
+                       name="wbc">NA</input>
             </label>
         </div>
 
+        <div class="form-control">
+            <label class="label-name">
+                Blasts (%):
+            </label>
+ 
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="blasts"
+                   placeholder="%"
+                   min="0" max="100" />
+        </div>
 
-    
+        <div class="form-control">
+            <label class="label-name">
+                PLT (l):
+            </label>
+ 
+            <!-- Input Type Text -->
+            <input type="number"
+                   id="plt"
+                   placeholder="l"
+                   min="0"/>
+        </div>
+
+    </form>
+
+    <p class="p-title">Driver Mutations Status</p>
+    <form id="form">
+        <div class="form-control">
+            <label class="label-name">
+                Type 1/like CALR WT:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="type1-yes"
+                       name="type1">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="type1-no"
+                       name="type1">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="type1-na"
+                       name="type1">NA</input>
+            </label>
+        </div>
+  
+        <div class="form-control">
+            <label class="label-name">
+                CALR/MPL WT:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="calr-yes"
+                       name="calr">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="calr-no"
+                       name="calr">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="calr-na"
+                       name="calr">NA</input>
+            </label>
+        </div>
+    </form>
+
+    <p class="p-title">Additional Myeloid Mutations</p>
+    <form id="form">
+        <div class="form-control">
+            <label class="label-name">
+                1 HMR:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="hmr-yes"
+                       name="hmr">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="hmr-no"
+                       name="hmr">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="hmr-na"
+                       name="hmr">NA</input>
+            </label>
+        </div>
+  
+        <div class="form-control">
+            <label class="label-name">
+                &ge; 2 HMR:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="hmr2-yes"
+                       name="hmr2">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="hmr2-no"
+                       name="hmr2">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="hmr2-na"
+                       name="hmr2">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                U2AF1Q157:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="u2-yes"
+                       name="u2">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="u2-no"
+                       name="u2">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="u2-na"
+                       name="u2">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                ASXL1:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="as-yes"
+                       name="as">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="as-no"
+                       name="as">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="as-na"
+                       name="as">NA</input>
+            </label>
+        </div>
+    </form>
+
+    <p class="p-title">Cytogenetics</p>
+    <form id="form">
+        <div class="form-control">
+            <label class="label-name">
+                Unfavourable by DIPSS1<sup>1</sup>:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="dip-yes"
+                       name="dip">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="dip-no"
+                       name="dip">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="dip-na"
+                       name="dip">NA</input>
+            </label>
+        </div>
+  
+        <div class="form-control">
+            <label class="label-name">
+                Unfavourable by MIPSS70 plus v. 2.02<sup>2</sup>:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="unmip-yes"
+                       name="unmip">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="unmip-no"
+                       name="unmip">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="unmip-na"
+                       name="unmip">NA</input>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label-name">
+                Very high-risk by MIPSS70 plus v. 2.03<sup>3</sup>:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="vmip-yes"
+                       name="vmip">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="vmip-no"
+                       name="vmip">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="vmip-na"
+                       name="vmip">NA</input>
+            </label>
+        </div>
+        <div class="div-references">
+            <sup>1</sup>= complex karyotype or sole or two abnormalities including +8, -7/7q-, i(17q), -5/5q-, 12p-,
+                inv(3) or 11q23 rearrangement. <br>
+            <sup>2</sup>= chromosomal abnormalities except “very high-risk” (see below) or sole 13q-, +9,20q-,
+                chromosome 1 translocation/ duplication or sex chromosome alterations including -Y<br>
+            <sup>3</sup>= single/multiple abnormalities of -7, i(17q), inv(3)/3q21,12p-/12p11.2,11q-/11q23,+21, or
+                other autosomal trisomies except+8/9
+        </div>
     </form>
     
+    <p class="p-title">Hystopathology</p>
+    <form id="form">
+        <div class="form-control">
+            <label class="label-name">
+                BMF grade &ge; 2:
+            </label>
+            <!-- Input Type Radio Button -->
+            <label>
+                <input type="radio"
+                       id="bmf-yes"
+                       name="bmf">Yes</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="bmf-no"
+                       name="bmf">No</input>
+            </label>
+            <label>
+                <input type="radio"
+                       id="bmf-na"
+                       name="bmf">NA</input>
+            </label>
+        </div>
+    </form>
+
     <button type="submit" value="submit" onclick="computeScores();  return false;">
-        Calcolo
+        Calculate Scores
     </button>
-    <p>Risultato</p>
+    
+    <p class="p-title">Risk category (score), survival</p>
     <div class="results">
-        <p id="score1"></p> <p id="score2"></p> <p id="score3"></p> <p id="score4"></p> <p id="score5"></p>
+        <label class="label-name">DIPSS: </label> <p style="display:inline" id="score1">-</p> <br><br>
+        <label class="label-name">DIPSS-Plus: </label> <p style="display:inline" id="score2">-</p> <br><br>
+        <label class="label-name">MIPSS70: </label> <p style="display:inline" id="score3">-</p> <br><br>
+        <label class="label-name">MIPSS70 plus version 2.0: </label> <p style="display:inline" id="score4">-</p> <br><br>
+        <label class="label-name">MTSS: </label> <p style="display:inline" id="score5">-</p> 
     </div>
 
     <script src="js/script.js"></script>
