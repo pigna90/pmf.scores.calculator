@@ -104,10 +104,11 @@
     <h1>Prognostici Score</h1>
   
     <!-- Create Form -->
+    <p>Sezione 1</p>
     <form id="form">
         <div class="form-control">
             <label for="age" id="label-age">
-                Age
+                Età
             </label>
  
             <!-- Input Type Text -->
@@ -154,12 +155,67 @@
             </label>
         </div>
 
-        <button type="submit" value="submit" onclick="computeScores();  return false;">
-            Calcola
-        </button>
-
     </form>
 
+    <p>Sezione 2</p>
+    <form id="form">
+        <div class="form-control">
+            <label for="age" id="label-age">
+                Età
+            </label>
+ 
+            <!-- Input Type Text -->
+            <input type="text"
+                   id="age"
+                   placeholder="Enter your age" />
+        </div>
+  
+        <div class="form-control">
+            <label for="role" id="label-role">
+                Professione
+            </label>
+             
+            <!-- Dropdown options -->
+            <select name="role" id="role">
+                <option value="student">Student</option>
+                <option value="professional">
+                    Professional
+                </option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+  
+        <div class="form-control">
+            <label>
+                Sesso:
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label for="recommed-1">
+                <input type="radio"
+                       id="recommed-1"
+                       name="recommed">M</input>
+            </label>
+            <label for="recommed-2">
+                <input type="radio"
+                       id="recommed-2"
+                       name="recommed">F</input>
+            </label>
+            <label for="recommed-3">
+                <input type="radio"
+                       id="recommed-3"
+                       name="recommed">D</input>
+            </label>
+        </div>
+
+
+    
+    </form>
+    
+    <button type="submit" value="submit" onclick="computeScores();  return false;">
+        Calcolo
+    </button>
+    <p>Risultato</p>
     <div class="results">
         <p id="score1"></p> <p id="score2"></p> <p id="score3"></p> <p id="score4"></p> <p id="score5"></p>
     </div>
