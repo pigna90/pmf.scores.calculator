@@ -108,3 +108,13 @@ button:active {
     font-style: italic;
     font-size: 105%;
 }
+
+.div-paper-references
+{
+    text-align: left;
+    text-justify: inter-word;
+    max-width: 1000px;
+    margin: 20px auto;
+    font-size: 100%;
+    
+}
