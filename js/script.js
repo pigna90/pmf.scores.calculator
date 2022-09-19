@@ -24,13 +24,13 @@ function dipss(age, cs, hb, wbc, blasts){
     score += 1
 
   if (score == 0)
-    return "Low(0), median OS NR"
+    return "Low(0), median survival NR"
   else if (score == 1 || score == 2)
-    return "Intermediate-1 (1-2), median OS 14.2 y"
+    return "Intermediate-1 (1-2), median survival 14.2 years"
   else if (score == 3 || score == 4)
-    return "Intermediate-2 (3-4), median OS 4 y"
+    return "Intermediate-2 (3-4), median survival 4 years"
   else
-    return "High (5-6), median OS 1.5 y"
+    return "High (5-6), median survival 1.5 years"
 }
 
 function dipss_plus(age, cs, rbc, hb, wbc, plt, blasts, dip){
@@ -56,18 +56,18 @@ function dipss_plus(age, cs, rbc, hb, wbc, plt, blasts, dip){
     score += 1
 
   if (score == 0)
-    return "Low(0), median OS 15.4 y"
+    return "Low(0), median survival 15.4 years"
   else if (score == 1)
-    return "Intermediate-1 (1), median OS 6.5 y"
+    return "Intermediate-1 (1), median survival 6.5 years"
   else if (score == 2 || score == 3)
-    return "Intermediate-2 (2-3), median OS 2.9 y"
+    return "Intermediate-2 (2-3), median survival 2.9 years"
   else
-    return "High (>=4), median OS 1.3 y"
+    return "High (>=4), median survival 1.3 years"
 }
 
 function mipss70(cs, hb, wbc, plt, blasts, type1, hmr, hmr2, bmf){
   var score = 0
-  if (isNaN(cs) || hb == "" || isNaN(wbc) || isNaN(plt) || blasts == "" || isNaN(type1) || isNaN(hmr) || isNaN(hmr2) || isNaN(bmf))
+  if (isNaN(cs) || hb == "" || isNaN(wbc) || isNaN(plt) || blasts == "" || isNaN(type1) || isNaN(hmr) || isNaN(hmr2) || isNaN(bmf) || (hmr == true && hmr2 == true))
     return "Can't be calculated (MISSING VALUES)"
   
   if (cs)
@@ -90,17 +90,17 @@ function mipss70(cs, hb, wbc, plt, blasts, type1, hmr, hmr2, bmf){
     score += 1
   
   if (score == 0 || score == 1)
-    return "Low (0-1), median OS NR"
+    return "Low (0-1), median survival NR"
   if (score >= 2 && score <= 4)
-    return "Intermediate (2-4), median OS 6.3 y"
+    return "Intermediate (2-4), median survival 6.3 years"
   else 
-    return "High (≥5), median OS 3.1 y"
+    return "High (≥5), median survival 3.1 years"
 
 }
 
-function mipss70_plus(cs, hb, female, male, blasts, type1, hmr, hmr2, u2, unmip, vmip){
+function mipss70_plus(cs, hb, female, male, blasts, type1, hmru2, hmr2u2, unmip, vmip){
   var score = 0
-  if (isNaN(cs) || hb == "" || (female == false && male == false) || blasts == "" || isNaN(type1) || isNaN(hmr) || isNaN(hmr2) || isNaN(u2) || (isNaN(unmip) == true  && isNaN(vmip) == true) || isNaN(unmip) || isNaN(vmip))
+  if (isNaN(cs) || hb == "" || (female == false && male == false) || blasts == "" || isNaN(type1) || isNaN(hmr2u2) || isNaN(hmru2) || (hmru2 == true && hmr2u2 == true) || (unmip == true  && vmip == true) || isNaN(unmip) || isNaN(vmip))
     return "Can't be calculated (MISSING VALUES)"
 
   if (cs)
@@ -113,9 +113,9 @@ function mipss70_plus(cs, hb, female, male, blasts, type1, hmr, hmr2, u2, unmip,
     score =+ 1
   if (type1)
     score =+ 2
-  if (hmr && u2)
+  if (hmru2)
     score =+ 2
-  if (hmr2 && u2)
+  if (hmr2u2)
     score =+ 3
   if (unmip)
     score =+ 3
@@ -123,15 +123,15 @@ function mipss70_plus(cs, hb, female, male, blasts, type1, hmr, hmr2, u2, unmip,
     score =+ 4
 
   if (score == 0)
-    return "Very low (0), median OS NR"
+    return "Very low (0), median survival NR"
   else if (score == 1 || score == 2)
-    return "Low (1-2), median OS 16.4 y"
+    return "Low (1-2), median survival 16.4 years"
   else if (score == 3 || score == 4)
-    return "Intermediate (3-4), median OS 7.7 y"
+    return "Intermediate (3-4), median survival 7.7 years"
   else if (score >= 5 && score <= 8)
-    return "High (5-8), median OS 4.1 y"
+    return "High (5-8), median survival 4.1 years"
   else
-    return "Very high (≥9), median OS 1.8 y"
+    return "Very high (≥9), median survival 1.8 years"
 }
 
 function mtss(age, knf, mmud, wbc, plt, calr, as_){
@@ -155,13 +155,13 @@ function mtss(age, knf, mmud, wbc, plt, calr, as_){
     score =+ 1
   
   if (score >= 0 && score <= 2)
-    return "Low (0-2), 5-year OS 90%"
+    return "Low (0-2), 5-year survival 90%"
   else if (score == 3 && score == 4)
-    return "Intermediate (3-4), 5-year OS 77%"
+    return "Intermediate (3-4), 5-year survival 77%"
   else if (score == 5)
-    return "High (5), 5-year OS 50%"
+    return "High (5), 5-year survival 50%"
   else if (score >= 6 && score <= 9)
-    return "Very high (6-9), 5-year OS 34%"
+    return "Very high (6-9), 5-year survival 34%"
 }
 
 function computeScores() {
@@ -183,21 +183,17 @@ function computeScores() {
   calr = getRadioButtonStatus("calr")
   hmr = getRadioButtonStatus("hmr")
   hmr2 = getRadioButtonStatus("hmr2")
-  u2 = getRadioButtonStatus("u2")
+  hmru2 = getRadioButtonStatus("hmru2")
+  hmr2u2 = getRadioButtonStatus("hmr2u2")
   as_ = getRadioButtonStatus("as")
   dip = getRadioButtonStatus("dip")
   unmip = getRadioButtonStatus("unmip")
   vmip = getRadioButtonStatus("vmip")
   bmf = getRadioButtonStatus("bmf")
 
-  console.log("age:", age, "hb:", hb, "blasts:", blasts, "plt:", plt, "male:", male, 
-   "female:", female, "cs:", cs, "rbc:", rbc, "knf:", knf, "mmud:", mmud, "wbc:", wbc, 
-   "type1:", type1, "calr:", calr, "hmr:", hmr, "hmr2:", hmr2, "u2:", u2, 
-   "as_:", as_, "dip:", dip, "unmip:", unmip, "vmip:", vmip, "bmf:", bmf)
-
   document.getElementById("dipss").innerHTML = dipss(age, cs, hb, wbc, blasts);
   document.getElementById("dipss-plus").innerHTML = dipss_plus(age, cs, rbc, hb, wbc, plt, blasts, dip);
   document.getElementById("mips").innerHTML = mipss70(cs, hb, wbc, plt, blasts, type1, hmr, hmr2, bmf);
-  document.getElementById("mips-plus").innerHTML = mipss70_plus(cs, hb, female, male, blasts, type1, hmr, hmr2, u2, unmip, vmip);
+  document.getElementById("mips-plus").innerHTML = mipss70_plus(cs, hb, female, male, blasts, type1, hmru2, hmr2u2, unmip, vmip);
   document.getElementById("mtss").innerHTML = mtss(age, knf, mmud, wbc, plt, calr, as_);
 }
