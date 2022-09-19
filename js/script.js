@@ -100,7 +100,7 @@ function mipss70(cs, hb, wbc, plt, blasts, type1, hmr, hmr2, bmf){
 
 function mipss70_plus(cs, hb, female, male, blasts, type1, hmr, hmr2, u2, unmip, vmip){
   var score = 0
-  if (isNaN(cs) || hb == "" || (female == false && male == false) || blasts == "" || isNaN(type1) || isNaN(hmr) || isNaN(hmr2) || isNaN(u2) || isNaN(unmip) || isNaN(vmip))
+  if (isNaN(cs) || hb == "" || (female == false && male == false) || blasts == "" || isNaN(type1) || isNaN(hmr) || isNaN(hmr2) || isNaN(u2) || (isNaN(unmip) == true  && isNaN(vmip) == true) || isNaN(unmip) || isNaN(vmip))
     return "Can't be calculated (MISSING VALUES)"
 
   if (cs)
