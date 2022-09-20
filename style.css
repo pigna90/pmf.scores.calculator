@@ -4,16 +4,7 @@ body {
     background-color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
-}
-
-/* Styling the Form (Color, Padding, Shadow) */
-formd {
-    background-color: #fff;
-    max-width: 500px;
-    margin: 0px auto;
-    margin-bottom: 30px;
-    padding: 10px 13px;
-    box-shadow: 2px 5px 13px rgba(0, 0, 0, 0.3);
+    font-size: 120%;
 }
 
 hr {
@@ -23,7 +14,7 @@ hr {
 }
 
 form {
-    max-width: 500px;
+    max-width: 650px;
     min-height: 20px;
     padding: 15px;
     margin: 0px auto;
@@ -73,6 +64,7 @@ form {
     border-radius: 2px;
     font-family: inherit;
     padding: 10px;
+    font-size: 100%;
     display: inline-block;
     width: 20%;
     color: #555;
@@ -139,8 +131,8 @@ button:active {
 {
     text-align: left;
     text-justify: inter-word;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 20px auto;
-    font-size: 100%;
+    font-size: 90%;
     
 }
