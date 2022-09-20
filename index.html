@@ -11,11 +11,13 @@
 </head>
   
 <body>
+    <br>
     <h1>Primary Myelofibrosis (PMF) prognostic scores calculator</h1>
-  
+    <br>
     <!-- Create Form -->
-    <p class="p-title">Clinical Features</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Clinical Features</p>
+        <hr>
         <div class="form-control">
             <label class="label-name">
                 Age (y):
@@ -140,8 +142,9 @@
 
     </form>
 
-    <p class="p-title">Complete Blood Count</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Complete Blood Count</p>
+        <hr>
         <div class="form-control">
             <label class="label-name" for="age" id="label-age">
                 Hb (g/dl):
@@ -203,8 +206,9 @@
 
     </form>
 
-    <p class="p-title">Driver Mutations Status</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Driver Mutations Status</p>
+        <hr>
         <div class="form-control">
             <label class="label-name">
                 Type 1/like <em>CALR</em> WT:
@@ -251,8 +255,9 @@
         </div>
     </form>
 
-    <p class="p-title">Additional Myeloid Mutations</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Additional Myeloid Mutations</p>
+        <hr>
         <div class="form-control">
             <label class="label-name">
                 1 HMR:
@@ -364,8 +369,9 @@
         </div>
     </form>
 
-    <p class="p-title">Cytogenetics</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Cytogenetics</p>
+        <hr>
         <div class="form-control">
             <label class="label-name">
                 Unfavourable by DIPSS<sup>1</sup>:
@@ -441,8 +447,9 @@
         </div>
     </form>
     
-    <p class="p-title">Hystopathology</p>
-    <form id="form">
+    <form>
+        <p class="p-title">Hystopathology</p>
+        <hr>
         <div class="form-control">
             <label class="label-name">
                 BMF grade &ge; 2:
@@ -469,16 +476,23 @@
     <button type="submit" value="submit" onclick="computeScores();  return false;">
         Calculate Scores
     </button>
-    
-    <p class="p-title">Risk category (score), survival</p>
-    <div class="results">
-        <label class="label-name">DIPSS: </label> <p style="display:inline" id="dipss">-</p> <br><br>
-        <label class="label-name">DIPSS-Plus: </label> <p style="display:inline" id="dipss-plus">-</p> <br><br>
-        <label class="label-name">MIPSS70: </label> <p style="display:inline" id="mips">-</p> <br><br>
-        <label class="label-name">MIPSS70 plus version 2.0: </label> <p style="display:inline" id="mips-plus">-</p> <br><br>
-        <label class="label-name">MTSS: </label> <p style="display:inline" id="mtss">-</p> 
-    </div>
 
+    <form>
+        <div class="form-control">
+            <p class="p-title">Risk category (score), survival</p>
+            <hr>
+            <label class="label-name">DIPSS: </label>
+            <p style="display:inline" id="dipss">-</p> <br><br>
+            <label class="label-name">DIPSS-Plus: </label>
+            <p style="display:inline" id="dipss-plus">-</p> <br><br>
+            <label class="label-name">MIPSS70: </label>
+            <p style="display:inline" id="mips">-</p> <br><br>
+            <label class="label-name">MIPSS70 plus version 2.0: </label>
+            <p style="display:inline" id="mips-plus">-</p> <br><br>
+            <label class="label-name">MTSS: </label>
+            <p style="display:inline" id="mtss">-</p>
+        </div>
+    </form>
     <script src="js/script.js"></script>
 
     <h3>References</h3>
@@ -489,7 +503,7 @@
         <p>Tefferi A, et al. <em>MIPSS70+ Version 2.0: Mutation and Karyotype-Enhanced International Prognostic Scoring System for Primary Myelofibrosis.</em> Clin Oncol. 2018; 36(17):1769-70.</p>
         <p>Gagelmann N, et al. <em>Comprehensive clinical-molecular transplant scoring system for myelofibrosis undergoing stem cell transplantation.</em> Blood. 2019; 133(20):2233-42.</p>
     </div>
-    
+    </form>
 </body>
   
 </html>
