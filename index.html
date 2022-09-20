@@ -9,9 +9,14 @@
             analytics: 'G-DD306JM647', 
     });
     </script>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>
+        var siteWidth = 1280;
+        var scale = screen.width /siteWidth;
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'');
+    </script>
+    <meta name="viewport" content="width=1280, initial-scale=1">
     <title>
         PMF Scores Calculator
     </title>
