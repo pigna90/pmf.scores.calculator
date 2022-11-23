@@ -102,25 +102,27 @@ function mipss70_plus(cs, hb, female, male, blasts, type1, hmru2, hmr2u2, unmip,
   var score = 0
   if (isNaN(cs) || hb == "" || (female == false && male == false) || blasts == "" || isNaN(type1) || isNaN(hmr2u2) || isNaN(hmru2) || (hmru2 == true && hmr2u2 == true) || (unmip == true  && vmip == true) || isNaN(unmip) || isNaN(vmip))
     return "Can't be calculated (MISSING VALUES)"
-
+  
   if (cs)
     score += 2
   if ((hb < 8 && female) || (hb <9 && male))
     score += 2
   if ((hb>= 8 && hb <= 9.9 && female) || (hb >= 9 && hb <= 10.9 && male))
-    score =+ 1
+    score += 1
   if (blasts >= 2)
-    score =+ 1
+    score += 1
   if (type1)
-    score =+ 2
+    score += 2
   if (hmru2)
-    score =+ 2
+    score += 2
   if (hmr2u2)
-    score =+ 3
+    score += 3
   if (unmip)
-    score =+ 3
+    score += 3
   if (vmip)
-    score =+ 4
+    score += 4
+
+  console.log(score)
 
   if (score == 0)
     return "Very low (0), median survival NR"
@@ -142,17 +144,17 @@ function mtss(age, knf, mmud, wbc, plt, calr, as_){
   if (age >= 57)
     score += 1
   if (knf)
-    score =+ 1
+    score += 1
   if (mmud)
-    score =+ 2
+    score += 2
   if (wbc)
-    score =+ 1
+    score += 1
   if (plt < 150)
-    score =+ 1
+    score += 1
   if (calr)
-    score =+ 2
+    score += 2
   if (as_)
-    score =+ 1
+    score += 1
   
   if (score >= 0 && score <= 2)
     return "Low (0-2), 5-year survival 90%"
