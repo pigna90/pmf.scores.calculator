@@ -16,7 +16,7 @@ hr {
 }
 
 form {
-    max-width: 550px;
+    max-width: 890px;
     min-height: 20px;
     padding: 15px;
     margin: 0px auto;
@@ -124,7 +124,7 @@ button:hover {
 {
     text-align: justify;
     text-justify: inter-word;
-    max-width: 700px;
+    max-width: 880px;
     margin: 20px auto;
     font-size: 70%;
     
