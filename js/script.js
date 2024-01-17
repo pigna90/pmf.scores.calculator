@@ -175,7 +175,7 @@ function mtss(age, knf, mmud, wbc, plt, calr, as_){
   
   if ((score >= 0 && score <= 2) && !missing_values)
     return "Low (0-2), 5-year survival 90%"
-  else if ((score == 3 && score == 4) && !missing_values)
+  else if ((score == 3 || score == 4) && !missing_values)
     return "Intermediate (3-4), 5-year survival 77%"
   else if (score == 5 && !missing_values)
     return "High (5), 5-year survival 50%"
