@@ -10,7 +10,7 @@
         PMF Scores Calculator
     </title>
     <link rel="stylesheet" href="style.css">
-    
+    <script src="js/gdpr.js"></script>
 </head>
   
 <body>
@@ -448,7 +448,7 @@
         <div class="div-references">
             <sup>1</sup>= complex karyotype or sole or two abnormalities including +8, -7/7q-, i(17q), -5/5q-, 12p-,
                 inv(3) or 11q23 rearrangement. <br>
-            <sup>2</sup>= chromosomal abnormalities except “very high-risk” (see below) or "favorable" 
+            <sup>2</sup>= chromosomal abnormalities except "very high-risk" (see below) or "favorable" 
                 (sole 13q-, +9, 20q-, chromosome 1 translocation/ duplication or sex chromosome alterations including -Y)<br>
             <sup>3</sup>= single/multiple abnormalities of -7, i(17q), inv(3)/3q21,12p-/12p11.2,11q-/11q23,+21, or
                 other autosomal trisomies except +8/9
@@ -502,6 +502,20 @@
         </div>
     </form>
     <script src="js/script.js"></script>
+
+    <!-- GDPR Banner -->
+    <div id="gdpr-banner" class="gdpr-banner">
+        <div class="gdpr-content">
+            <p class="gdpr-text">
+                This website uses cookies to analyze site traffic using Google Analytics. 
+                By clicking "Accept", you consent to the use of cookies for analytics purposes.
+            </p>
+            <div class="gdpr-buttons">
+                <button id="reject-cookies" class="gdpr-button reject-button">Reject</button>
+                <button id="accept-cookies" class="gdpr-button accept-button">Accept</button>
+            </div>
+        </div>
+    </div>
 </body>
   
 </html>
