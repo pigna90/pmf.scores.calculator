@@ -6,514 +6,625 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        PMF Scores Calculator
-    </title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calculate Primary Myelofibrosis (PMF) prognostic scores with our easy-to-use calculator. Get accurate risk assessments for PMF patients.">
+    <meta name="keywords" content="PMF, Primary Myelofibrosis, prognostic scores, calculator, medical calculator">
+    <meta name="author" content="PMF Scores Calculator">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="PMF Scores Calculator">
+    <meta property="og:description" content="Calculate Primary Myelofibrosis (PMF) prognostic scores with our easy-to-use calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pmf.scores.calculator">
+    <meta property="og:image" content="/imgs/pmf.ico">
+    <meta property="og:site_name" content="PMF Scores Calculator">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PMF Scores Calculator">
+    <meta name="twitter:description" content="Calculate Primary Myelofibrosis (PMF) prognostic scores with our easy-to-use calculator.">
+    <meta name="twitter:image" content="/imgs/pmf.ico">
+    
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/imgs/pmf.ico">
+    
+    <title>PMF Scores Calculator</title>
     <link rel="stylesheet" href="style.css">
-    <script src="js/gdpr.js"></script>
+    
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PMF Scores Calculator",
+        "description": "Calculate Primary Myelofibrosis (PMF) prognostic scores with our easy-to-use calculator.",
+        "url": "https://pmf.scores.calculator",
+        "applicationCategory": "MedicalApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <script src="js/script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/js/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </head>
   
 <body>
-    <div class="topnav">
-        <a class="active" href="/index.html">Home</a>
-        <a href="/references.html">References</a>
-        <a href="/about.html">About</a>
-      </div>
-    <br>
-    <h2>Primary Myelofibrosis (PMF) prognostic scores calculator</h2>
-    <br>
-    <!-- Create Form -->
-    <form>
-        <p class="p-title">Clinical Features</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name">
-                Age (y):
-            </label>
- 
-            <!-- Input Type Text -->
-            <input type="number"
-                   id="age"
-                   placeholder="N/A"
-                   min="0" max="150" />
-        </div>
-    
-        <div class="form-control">
-            <label class="label-name">
-                Gender:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="gender-male"
-                       name="gender">Male</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="gender-female"
-                       name="gender">Female</input>
-            </label>
-        </div>
-  
-        <div class="form-control">
-            <label class="label-name">
-                Constitutional Symptoms:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="cs-yes"
-                       name="cs">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="cs-no"
-                       name="cs">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="cs-na"
-                       name="cs" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                RBC transfusions need:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="rbc-yes"
-                       name="rbc">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="rbc-no"
-                       name="rbc">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="rbc-na"
-                       name="rbc" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                Karnofsky <90%:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="knf-yes"
-                       name="knf">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                        id="knf-no"
-                        name="knf">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                        id="knf-na"
-                        name="knf" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                HLA-mismatched unrelated donor: <!--MMUD-->
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="mmud-yes"
-                       name="mmud">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                        id="mmud-no"
-                        name="mmud">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                        id="mmud-na"
-                        name="mmud" checked>N/A</input>
-            </label>
-        </div>
-
-    </form>
-
-    <form>
-        <p class="p-title">Complete Blood Count</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name" for="age" id="label-age">
-                Hb (g/dl):
-            </label>
- 
-            <!-- Input Type Text -->
-            <input type="number"
-                   id="hb"
-                   placeholder="N/A"
-                   min="0" max="150" />
-        </div>
-  
-        <div class="form-control">
-            <label class="label-name">
-                WBC > 25x10<sup>9</sup>/l:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="wbc-yes"
-                       name="wbc">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="wbc-no"
-                       name="wbc">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="wbc-na"
-                       name="wbc" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                Blasts (%):
-            </label>
- 
-            <!-- Input Type Text -->
-            <input type="number"
-                   id="blasts"
-                   placeholder="N/A"
-                   min="0" max="100" />
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                PLT (x10<sup>9</sup>/l):
-            </label>
- 
-            <!-- Input Type Text -->
-            <input type="number"
-                   id="plt"
-                   placeholder="N/A"
-                   min="0"/>
-        </div>
-
-    </form>
-
-    <form>
-        <p class="p-title">Driver Mutations Status</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name">
-                Absence of type 1/type 1 like <em>CALR</em> mutation:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="type1-yes"
-                       name="type1">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="type1-no"
-                       name="type1">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="type1-na"
-                       name="type1" checked>N/A</input>
-            </label>
-        </div>
-  
-        <div class="form-control">
-            <label class="label-name">
-                Non-<em>CALR</em>/<em>MPL</em> driver mutation genotype:
-            </label>
- 
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="calr-yes"
-                       name="calr">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="calr-no"
-                       name="calr">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="calr-na"
-                       name="calr" checked>N/A</input>
-            </label>
-        </div>
-    </form>
-
-    <form>
-        <p class="p-title">Additional Myeloid Mutations</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name">
-              A mutation in only one of the following genes <em>ASXL1, SRSF2, EZH2, IDH1/2</em>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="hmr-yes"
-                       name="hmr">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr-no"
-                       name="hmr">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr-na"
-                       name="hmr" checked>N/A</input>
-            </label>
-        </div>
-  
-        <div class="form-control">
-            <label class="label-name">
-              At least 2 mutated genes among <em>ASXL1, SRSF2, EZH2, IDH1/2</em>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="hmr2-yes"
-                       name="hmr2">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr2-no"
-                       name="hmr2">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr2-na"
-                       name="hmr2" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                A mutation in only one of the following genes <em>ASXL1, SRSF2, EZH2, IDH1/2, U2AF1Q157</em>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="hmru2-yes"
-                       name="hmru2">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmru2-no"
-                       name="hmru2">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmru2-na"
-                       name="hmru2" checked>N/A</input>
-            </label>
-        </div>
-    
-        <div class="form-control">
-            <label class="label-name">
-              At least 2 mutated genes among <em>ASXL1, SRSF2, EZH2, IDH1/2, U2AF1Q157</em>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="hmr2u2-yes"
-                       name="hmr2u2">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr2u2-no"
-                       name="hmr2u2">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="hmr2u2-na"
-                       name="hmr2u2" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                <em>ASXL1</em> mutated:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="as-yes"
-                       name="as">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="as-no"
-                       name="as">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="as-na"
-                       name="as" checked>N/A</input>
-            </label>
-        </div>
-    </form>
-
-    <form>
-        <p class="p-title">Cytogenetics</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name">
-                Unfavourable by DIPSS plus <sup>1</sup>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="dip-yes"
-                       name="dip">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="dip-no"
-                       name="dip">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="dip-na"
-                       name="dip" checked>N/A</input>
-            </label>
-        </div>
-  
-        <div class="form-control">
-            <label class="label-name">
-                Unfavourable by MIPSS70 plus v. 2.0<sup>2</sup>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="unmip-yes"
-                       name="unmip">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="unmip-no"
-                       name="unmip">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="unmip-na"
-                       name="unmip" checked>N/A</input>
-            </label>
-        </div>
-
-        <div class="form-control">
-            <label class="label-name">
-                Very high-risk by MIPSS70 plus v. 2.0<sup>3</sup>:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="vmip-yes"
-                       name="vmip">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="vmip-no"
-                       name="vmip">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="vmip-na"
-                       name="vmip" checked>N/A</input>
-            </label>
-        </div>
-        <div class="div-references">
-            <sup>1</sup>= complex karyotype or sole or two abnormalities including +8, -7/7q-, i(17q), -5/5q-, 12p-,
-                inv(3) or 11q23 rearrangement. <br>
-            <sup>2</sup>= chromosomal abnormalities except "very high-risk" (see below) or "favorable" 
-                (sole 13q-, +9, 20q-, chromosome 1 translocation/ duplication or sex chromosome alterations including -Y)<br>
-            <sup>3</sup>= single/multiple abnormalities of -7, i(17q), inv(3)/3q21,12p-/12p11.2,11q-/11q23,+21, or
-                other autosomal trisomies except +8/9
-        </div>
-    </form>
-    
-    <form>
-        <p class="p-title">Hystopathology</p>
-        <hr>
-        <div class="form-control">
-            <label class="label-name">
-                BMF grade &ge; 2:
-            </label>
-            <!-- Input Type Radio Button -->
-            <label>
-                <input type="radio"
-                       id="bmf-yes"
-                       name="bmf">Yes</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="bmf-no"
-                       name="bmf">No</input>
-            </label>
-            <label>
-                <input type="radio"
-                       id="bmf-na"
-                       name="bmf" checked>N/A</input>
-            </label>
-        </div>
-    </form>
-
-    <button type="submit" value="submit" onclick="computeScores();  return false;">
-        Calculate Scores
-    </button>
-
-    <form>
-        <div class="form-control">
-            <p class="p-title">Risk category (score), survival</p>
-            <hr>
-            <label class="label-name">DIPSS: </label>
-            <p style="display:inline" id="dipss">-</p> <br><br>
-            <label class="label-name">DIPSS-Plus: </label>
-            <p style="display:inline" id="dipss-plus">-</p> <br><br>
-            <label class="label-name">MIPSS70: </label>
-            <p style="display:inline" id="mips">-</p> <br><br>
-            <label class="label-name">MIPSS70 plus version 2.0: </label>
-            <p style="display:inline" id="mips-plus">-</p> <br><br>
-            <label class="label-name">MTSS: </label>
-            <p style="display:inline" id="mtss">-</p>
-        </div>
-    </form>
-    <script src="js/script.js"></script>
-
-    <!-- GDPR Banner -->
-    <div id="gdpr-banner" class="gdpr-banner">
-        <div class="gdpr-content">
-            <p class="gdpr-text">
-                This website uses cookies to analyze site traffic using Google Analytics. 
-                By clicking "Accept", you consent to the use of cookies for analytics purposes.
-            </p>
-            <div class="gdpr-buttons">
-                <button id="reject-cookies" class="gdpr-button reject-button">Reject</button>
-                <button id="accept-cookies" class="gdpr-button accept-button">Accept</button>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="topnav" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a class="active" href="/index.html" aria-current="page">Home</a>
+                <a href="/references.html">References</a>
+                <a href="/about.html">About</a>
             </div>
+        </div>
+    </div>
+    
+    <div class="main-container" id="main-content" role="main">
+        <h1 class="page-title">Primary Myelofibrosis (PMF)</h1>
+        <h2 class="page-subtitle">Prognostic Scores Calculator</h2>
+        
+        <!-- Create Form -->
+        <form>
+            <p class="p-title">Clinical Features</p>
+            <div class="form-control">
+                <label class="label-name">
+                    Age (y):
+                </label>
+     
+                <!-- Input Type Text -->
+                <input type="number"
+                       id="age"
+                       placeholder="N/A"
+                       min="0" max="150" />
+            </div>
+        
+            <div class="form-control">
+                <label class="label-name">
+                    Gender:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="gender-male"
+                               name="gender">Male</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="gender-female"
+                               name="gender">Female</input>
+                    </label>
+                </div>
+            </div>
+      
+            <div class="form-control">
+                <label class="label-name">
+                    Constitutional Symptoms:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="cs-yes"
+                               name="cs">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="cs-no"
+                               name="cs">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="cs-na"
+                               name="cs" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    RBC transfusions need:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="rbc-yes"
+                               name="rbc">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="rbc-no"
+                               name="rbc">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="rbc-na"
+                               name="rbc" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    Karnofsky <90%:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="knf-yes"
+                               name="knf">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                                id="knf-no"
+                                name="knf">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                                id="knf-na"
+                                name="knf" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    HLA-mismatched unrelated donor: <!--MMUD-->
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="mmud-yes"
+                               name="mmud">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                                id="mmud-no"
+                                name="mmud">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                                id="mmud-na"
+                                name="mmud" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <form>
+            <p class="p-title">Complete Blood Count</p>
+            <div class="form-control">
+                <label class="label-name" for="age" id="label-age">
+                    Hb (g/dl):
+                </label>
+     
+                <!-- Input Type Text -->
+                <input type="number"
+                       id="hb"
+                       placeholder="N/A"
+                       min="0" max="150" />
+            </div>
+      
+            <div class="form-control">
+                <label class="label-name">
+                    WBC > 25x10<sup>9</sup>/l:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="wbc-yes"
+                               name="wbc">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="wbc-no"
+                               name="wbc">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="wbc-na"
+                               name="wbc" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    Blasts (%):
+                </label>
+     
+                <!-- Input Type Text -->
+                <input type="number"
+                       id="blasts"
+                       placeholder="N/A"
+                       min="0" max="100" />
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    PLT (x10<sup>9</sup>/l):
+                </label>
+     
+                <!-- Input Type Text -->
+                <input type="number"
+                       id="plt"
+                       placeholder="N/A"
+                       min="0"/>
+            </div>
+        </form>
+
+        <form>
+            <p class="p-title">Driver Mutations Status</p>
+            <div class="form-control">
+                <label class="label-name">
+                    Absence of type 1/type 1 like <em>CALR</em> mutation:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="type1-yes"
+                               name="type1">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="type1-no"
+                               name="type1">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="type1-na"
+                               name="type1" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+      
+            <div class="form-control">
+                <label class="label-name">
+                    Non-<em>CALR</em>/<em>MPL</em> driver mutation genotype:
+                </label>
+     
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="calr-yes"
+                               name="calr">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="calr-no"
+                               name="calr">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="calr-na"
+                               name="calr" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <form>
+            <p class="p-title">Additional Myeloid Mutations</p>
+            <div class="form-control">
+                <label class="label-name">
+                  A mutation in only one of the following genes <em>ASXL1, SRSF2, EZH2, IDH1/2</em>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="hmr-yes"
+                               name="hmr">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr-no"
+                               name="hmr">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr-na"
+                               name="hmr" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+      
+            <div class="form-control">
+                <label class="label-name">
+                  At least 2 mutated genes among <em>ASXL1, SRSF2, EZH2, IDH1/2</em>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="hmr2-yes"
+                               name="hmr2">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr2-no"
+                               name="hmr2">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr2-na"
+                               name="hmr2" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    A mutation in only one of the following genes <em>ASXL1, SRSF2, EZH2, IDH1/2, U2AF1Q157</em>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="hmru2-yes"
+                               name="hmru2">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmru2-no"
+                               name="hmru2">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmru2-na"
+                               name="hmru2" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+        
+            <div class="form-control">
+                <label class="label-name">
+                  At least 2 mutated genes among <em>ASXL1, SRSF2, EZH2, IDH1/2, U2AF1Q157</em>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="hmr2u2-yes"
+                               name="hmr2u2">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr2u2-no"
+                               name="hmr2u2">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="hmr2u2-na"
+                               name="hmr2u2" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    <em>ASXL1</em> mutated:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="as-yes"
+                               name="as">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="as-no"
+                               name="as">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="as-na"
+                               name="as" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <form>
+            <p class="p-title">Cytogenetics</p>
+            <div class="form-control">
+                <label class="label-name">
+                    Unfavourable by DIPSS plus <sup>1</sup>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="dip-yes"
+                               name="dip">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="dip-no"
+                               name="dip">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="dip-na"
+                               name="dip" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+      
+            <div class="form-control">
+                <label class="label-name">
+                    Unfavourable by MIPSS70 plus v. 2.0<sup>2</sup>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="unmip-yes"
+                               name="unmip">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="unmip-no"
+                               name="unmip">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="unmip-na"
+                               name="unmip" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label-name">
+                    Very high-risk by MIPSS70 plus v. 2.0<sup>3</sup>:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="vmip-yes"
+                               name="vmip">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="vmip-no"
+                               name="vmip">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="vmip-na"
+                               name="vmip" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+            <div class="div-references">
+                <sup>1</sup>= complex karyotype or sole or two abnormalities including +8, -7/7q-, i(17q), -5/5q-, 12p-,
+                    inv(3) or 11q23 rearrangement. <br>
+                <sup>2</sup>= chromosomal abnormalities except "very high-risk" (see below) or "favorable" 
+                    (sole 13q-, +9, 20q-, chromosome 1 translocation/ duplication or sex chromosome alterations including -Y)<br>
+                <sup>3</sup>= single/multiple abnormalities of -7, i(17q), inv(3)/3q21,12p-/12p11.2,11q-/11q23,+21, or
+                    other autosomal trisomies except +8/9
+            </div>
+        </form>
+        
+        <form>
+            <p class="p-title">Hystopathology</p>
+            <div class="form-control">
+                <label class="label-name">
+                    BMF grade &ge; 2:
+                </label>
+                <!-- Input Type Radio Button -->
+                <div class="radio-group">
+                    <label>
+                        <input type="radio"
+                               id="bmf-yes"
+                               name="bmf">Yes</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="bmf-no"
+                               name="bmf">No</input>
+                    </label>
+                    <label>
+                        <input type="radio"
+                               id="bmf-na"
+                               name="bmf" checked>N/A</input>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <div class="button-container">
+            <button type="submit" value="submit" onclick="computeScores(); return false;">
+                Calculate Scores
+            </button>
+        </div>
+
+        <div class="results-wrapper">
+            <form id="results-form" style="display: none;">
+                <table class="results-table">
+                    <tr>
+                        <th>Risk Category (score)</th>
+                        <th>Survival</th>
+                    </tr>
+                    <tr>
+                        <td>DIPSS:</td>
+                        <td id="dipss">-</td>
+                    </tr>
+                    <tr>
+                        <td>DIPSS-Plus:</td>
+                        <td id="dipss-plus">-</td>
+                    </tr>
+                    <tr>
+                        <td>MIPSS70:</td>
+                        <td id="mips">-</td>
+                    </tr>
+                    <tr>
+                        <td>MIPSS70 plus version 2.0:</td>
+                        <td id="mips-plus">-</td>
+                    </tr>
+                    <tr>
+                        <td>MTSS:</td>
+                        <td id="mtss">-</td>
+                    </tr>
+                </table>
+                <button type="button" onclick="exportToPDF()" class="export-button">
+                    Export Results
+                </button>
+            </form>
         </div>
     </div>
 </body>
