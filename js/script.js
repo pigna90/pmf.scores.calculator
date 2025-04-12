@@ -313,11 +313,12 @@ function exportToPDF() {
             styles: { 
                 fontSize: 7,
                 cellPadding: 1.5,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -344,11 +345,12 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -374,11 +376,12 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -410,11 +413,12 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -442,11 +446,12 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -473,11 +478,12 @@ function exportToPDF() {
                 lineWidth: 0.1,
                 font: 'helvetica',
                 fontStyle: 'normal',
-                textColor: [102, 102, 102]
+                textColor: [102, 102, 102],
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 100 },
-                1: { cellWidth: 50 }
+                0: { cellWidth: 100, halign: 'left' },
+                1: { cellWidth: 50, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
@@ -506,7 +512,8 @@ function exportToPDF() {
                 fillColor: [37, 99, 235],
                 textColor: [255, 255, 255],
                 fontSize: 8,
-                fontStyle: 'bold'
+                fontStyle: 'bold',
+                halign: 'center'
             },
             styles: { 
                 fontSize: 8,
@@ -514,11 +521,12 @@ function exportToPDF() {
                 lineWidth: 0.1,
                 font: 'helvetica',
                 fontStyle: 'normal',
-                textColor: [0, 0, 0]
+                textColor: [0, 0, 0],
+                halign: 'center'
             },
             columnStyles: { 
-                0: { cellWidth: 50 },
-                1: { cellWidth: 100 }
+                0: { cellWidth: 50, halign: 'left' },
+                1: { cellWidth: 100, halign: 'center' }
             },
             margin: { left: 27.5, right: 27.5 }
         });
