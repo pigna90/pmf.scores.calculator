@@ -261,11 +261,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function exportToPDF() {
     try {
-        // Create a new window for printing
-        const printWindow = window.open('', '_blank');
+        // Check if jsPDF is available
+        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
+            throw new Error('jsPDF library not loaded. Please refresh the page and try again.');
+        }
+
+        // Initialize jsPDF with proper configuration
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            putOnlyUsedFonts: true
+        });
         
-        // Get current date
-        const currentDate = new Date().toLocaleDateString();
+        // Set font
+        doc.setFont('helvetica', 'normal');
+        
+        // Add title
+        doc.setFontSize(16);
+        doc.setTextColor(37, 99, 235); // Blue color
+        doc.text('PMF Scores Calculator Results', 105, 15, { align: 'center' });
+        
+        // Add date
+        doc.setFontSize(10);
+        doc.setTextColor(102, 102, 102); // Gray color
+        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
+        
+        // Add clinical features section
+        doc.setFontSize(12);
+        doc.setTextColor(31, 41, 55); // Dark gray color
+        doc.text('Clinical Features', 15, 35);
         
         // Get all input values
         const inputs = {
@@ -309,6 +335,25 @@ function exportToPDF() {
                            getRadioButtonStatus("bmf") === false ? "No" : "N/A"
         };
 
+        // Convert inputs to table data
+        const tableData = Object.entries(inputs).map(([key, value]) => [key, value]);
+        
+        // Add clinical features table
+        doc.autoTable({
+            startY: 40,
+            head: [['Feature', 'Value']],
+            body: tableData,
+            theme: 'grid',
+            headStyles: { fillColor: [37, 99, 235] },
+            styles: { fontSize: 8 },
+            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 50 } },
+            margin: { left: 15, right: 15 }
+        });
+
+        // Add results section
+        doc.setFontSize(12);
+        doc.text('Results', 15, doc.autoTable.previous.finalY + 10);
+
         // Get results
         const results = {
             "DIPSS": document.getElementById("dipss").textContent,
@@ -318,129 +363,26 @@ function exportToPDF() {
             "MTSS": document.getElementById("mtss").textContent
         };
 
-        // Create HTML content for the print window
-        let htmlContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>PMF Scores Calculator Results</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                    color: #333;
-                }
-                h1 {
-                    color: #2563eb;
-                    text-align: center;
-                    margin-bottom: 5px;
-                }
-                .date {
-                    text-align: center;
-                    margin-bottom: 20px;
-                    color: #666;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                th, td {
-                    border: 1px solid #ddd;
-                    padding: 8px;
-                    text-align: left;
-                }
-                th {
-                    background-color: #2563eb;
-                    color: white;
-                }
-                tr:nth-child(even) {
-                    background-color: #f2f2f2;
-                }
-                .footer {
-                    text-align: center;
-                    margin-top: 20px;
-                    font-size: 12px;
-                    color: #666;
-                }
-                @media print {
-                    body {
-                        margin: 0;
-                        padding: 20px;
-                    }
-                    .no-print {
-                        display: none;
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            <h1>PMF Scores Calculator Results</h1>
-            <div class="date">Generated on: ${currentDate}</div>
-            
-            <h2>Clinical Features</h2>
-            <table>
-                <tr>
-                    <th>Feature</th>
-                    <th>Value</th>
-                </tr>
-        `;
+        // Convert results to table data
+        const resultsData = Object.entries(results).map(([key, value]) => [key, value]);
 
-        // Add input values to the table
-        for (const [key, value] of Object.entries(inputs)) {
-            htmlContent += `
-                <tr>
-                    <td>${key}</td>
-                    <td>${value}</td>
-                </tr>
-            `;
-        }
+        // Add results table
+        doc.autoTable({
+            startY: doc.autoTable.previous.finalY + 15,
+            head: [['Score', 'Result']],
+            body: resultsData,
+            theme: 'grid',
+            headStyles: { fillColor: [37, 99, 235] },
+            styles: { fontSize: 8 },
+            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 50 } },
+            margin: { left: 15, right: 15 }
+        });
 
-        htmlContent += `
-            </table>
-            
-            <h2>Results</h2>
-            <table>
-                <tr>
-                    <th>Score</th>
-                    <th>Result</th>
-                </tr>
-        `;
-
-        // Add results to the table
-        for (const [key, value] of Object.entries(results)) {
-            htmlContent += `
-                <tr>
-                    <td>${key}</td>
-                    <td>${value}</td>
-                </tr>
-            `;
-        }
-
-        htmlContent += `
-            </table>
-            
-            <div class="footer">
-                PMF Scores Calculator - Generated on ${currentDate}
-            </div>
-            
-            <div class="no-print" style="text-align: center; margin-top: 20px;">
-                <button onclick="window.print()">Print Results</button>
-            </div>
-        </body>
-        </html>
-        `;
-
-        // Write the HTML content to the new window
-        printWindow.document.open();
-        printWindow.document.write(htmlContent);
-        printWindow.document.close();
-        
-        // Focus the new window
-        printWindow.focus();
+        // Save the PDF
+        doc.save('PMF_Scores_Results.pdf');
         
     } catch (error) {
-        console.error('Error generating report:', error);
-        alert('There was an error generating the report. Please try again.');
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF: ' + error.message);
     }
 }
