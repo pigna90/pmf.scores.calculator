@@ -108,9 +108,9 @@ function mipss70(cs, hb, wbc, plt, blasts, type1, hmr, hmr2, bmf){
   else if ((score >= 2 && score <= 4) && !missing_values)
     return "Intermediate (2-4), median survival 6.3 years"
   else if (score > 4 && !missing_values)
-    return "High (≥5), median survival 3.1 years"
+    return "High (>=5), median survival 3.1 years"
   else if (score > 4 && missing_values)
-    return "Warning: can't be calculated for missing values but with available data risk category is: High (≥5), median survival 3.1 years"
+    return "Warning: can't be calculated for missing values but with available data risk category is: High (>=5), median survival 3.1 years"
   else
     return "Can't be calculated (MISSING VALUES)"
 }
@@ -147,9 +147,9 @@ function mipss70_plus(cs, hb, female, male, blasts, type1, hmru2, hmr2u2, unmip,
   else if ((score >= 5 && score <= 8) && !missing_values)
     return "High (5-8), median survival 4.1 years"
   else if (score > 8 && !missing_values)
-    return "Very high (≥9), median survival 1.8 years"
+    return "Very high (>=9), median survival 1.8 years"
   else if (score > 8 && missing_values)
-    return "Warning: can't be calculated for missing values but with available data risk category is: Very high (≥9), median survival 1.8 years"
+    return "Warning: can't be calculated for missing values but with available data risk category is: Very high (>=9), median survival 1.8 years"
   else
     return "Can't be calculated (MISSING VALUES)"
 }
@@ -271,21 +271,22 @@ function exportToPDF() {
         
         // Set font
         doc.setFont('helvetica', 'normal');
-        
-        // Add title
-        doc.setFontSize(14);
+        doc.setFontSize(12);
         doc.setTextColor(37, 99, 235); // Blue color
         doc.text('PMF Scores Calculator Results', 105, 10, { align: 'center' });
         
         // Add date
-        doc.setFontSize(8);
+        doc.setFontSize(7);
         doc.setTextColor(102, 102, 102); // Gray color
         doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 15, { align: 'center' });
+        
+        // Add website link
+        doc.text('https://pmfscorescalculator.com', 105, 20, { align: 'center' });
 
-        let startY = 20;
+        let startY = 25;
 
         // Clinical Features Section
-        doc.setFontSize(10);
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(31, 41, 55);
         doc.text('Clinical Features', 105, startY, { align: 'center' });
@@ -310,8 +311,8 @@ function exportToPDF() {
             body: clinicalFeatures,
             theme: 'grid',
             styles: { 
-                fontSize: 8,
-                cellPadding: 2,
+                fontSize: 7,
+                cellPadding: 1.5,
                 lineWidth: 0.1
             },
             columnStyles: { 
@@ -330,10 +331,10 @@ function exportToPDF() {
 
         const bloodCount = [
             ["Hb (g/dl)", document.getElementById("hb").value || "N/A"],
-            ["WBC > 25x10⁹/l", getRadioButtonStatus("wbc") === true ? "Yes" : 
+            ["WBC > 25x10^9/l", getRadioButtonStatus("wbc") === true ? "Yes" : 
                              getRadioButtonStatus("wbc") === false ? "No" : "N/A"],
             ["Blasts (%)", document.getElementById("blasts").value || "N/A"],
-            ["PLT (x10⁹/l)", document.getElementById("plt").value || "N/A"]
+            ["PLT (x10^9/l)", document.getElementById("plt").value || "N/A"]
         ];
 
         doc.autoTable({
@@ -458,7 +459,7 @@ function exportToPDF() {
         doc.setFont('helvetica', 'normal');
 
         const histopathology = [
-            ["BMF grade ≥ 2", getRadioButtonStatus("bmf") === true ? "Yes" : 
+            ["BMF grade >= 2", getRadioButtonStatus("bmf") === true ? "Yes" : 
                            getRadioButtonStatus("bmf") === false ? "No" : "N/A"]
         ];
 
@@ -469,7 +470,10 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                font: 'helvetica',
+                fontStyle: 'normal',
+                textColor: [102, 102, 102]
             },
             columnStyles: { 
                 0: { cellWidth: 100 },
@@ -488,8 +492,8 @@ function exportToPDF() {
         const results = [
             ["DIPSS", document.getElementById("dipss").textContent],
             ["DIPSS-Plus", document.getElementById("dipss-plus").textContent],
-            ["MIPSS70", document.getElementById("mips").textContent],
-            ["MIPSS70 plus version 2.0", document.getElementById("mips-plus").textContent],
+            ["MIPSS70", document.getElementById("mips").textContent.replace(/≥/g, "&ge;")],
+            ["MIPSS70 plus version 2.0", document.getElementById("mips-plus").textContent.replace(/≥/g, "&ge;")],
             ["MTSS", document.getElementById("mtss").textContent]
         ];
 
@@ -507,7 +511,10 @@ function exportToPDF() {
             styles: { 
                 fontSize: 8,
                 cellPadding: 2,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                font: 'helvetica',
+                fontStyle: 'normal',
+                textColor: [0, 0, 0]
             },
             columnStyles: { 
                 0: { cellWidth: 50 },
@@ -515,11 +522,6 @@ function exportToPDF() {
             },
             margin: { left: 27.5, right: 27.5 }
         });
-
-        // Add footer
-        doc.setFontSize(7);
-        doc.setTextColor(102, 102, 102);
-        doc.text('https://pmf-scores-calculator.com', 105, 285, { align: 'center' });
 
         // Save the PDF
         doc.save('PMF_Scores_Results.pdf');
