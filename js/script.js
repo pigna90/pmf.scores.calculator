@@ -262,121 +262,264 @@ document.addEventListener('DOMContentLoaded', function() {
 function exportToPDF() {
     try {
         // Check if jsPDF is available
-        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
+        if (typeof window.jsPDF === 'undefined') {
             throw new Error('jsPDF library not loaded. Please refresh the page and try again.');
         }
 
-        // Initialize jsPDF with proper configuration
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4',
-            putOnlyUsedFonts: true
-        });
+        // Initialize jsPDF with portrait orientation
+        const doc = new window.jsPDF('p', 'mm', 'a4');
         
         // Set font
         doc.setFont('helvetica', 'normal');
         
         // Add title
-        doc.setFontSize(16);
+        doc.setFontSize(14);
         doc.setTextColor(37, 99, 235); // Blue color
-        doc.text('PMF Scores Calculator Results', 105, 15, { align: 'center' });
+        doc.text('PMF Scores Calculator Results', 105, 10, { align: 'center' });
         
         // Add date
-        doc.setFontSize(10);
+        doc.setFontSize(8);
         doc.setTextColor(102, 102, 102); // Gray color
-        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 25, { align: 'center' });
-        
-        // Add clinical features section
-        doc.setFontSize(12);
-        doc.setTextColor(31, 41, 55); // Dark gray color
-        doc.text('Clinical Features', 15, 35);
-        
-        // Get all input values
-        const inputs = {
-            "Age (y)": document.getElementById("age").value || "N/A",
-            "Gender": document.getElementById("gender-male").checked ? "Male" : 
-                     document.getElementById("gender-female").checked ? "Female" : "N/A",
-            "Constitutional Symptoms": getRadioButtonStatus("cs") === true ? "Yes" : 
-                                     getRadioButtonStatus("cs") === false ? "No" : "N/A",
-            "RBC transfusions need": getRadioButtonStatus("rbc") === true ? "Yes" : 
-                                   getRadioButtonStatus("rbc") === false ? "No" : "N/A",
-            "Karnofsky <90%": getRadioButtonStatus("knf") === true ? "Yes" : 
-                             getRadioButtonStatus("knf") === false ? "No" : "N/A",
-            "HLA-mismatched unrelated donor": getRadioButtonStatus("mmud") === true ? "Yes" : 
-                                            getRadioButtonStatus("mmud") === false ? "No" : "N/A",
-            "Hb (g/dl)": document.getElementById("hb").value || "N/A",
-            "WBC > 25x10⁹/l": getRadioButtonStatus("wbc") === true ? "Yes" : 
-                             getRadioButtonStatus("wbc") === false ? "No" : "N/A",
-            "Blasts (%)": document.getElementById("blasts").value || "N/A",
-            "PLT (x10⁹/l)": document.getElementById("plt").value || "N/A",
-            "Absence of type 1/type 1 like CALR mutation": getRadioButtonStatus("type1") === true ? "Yes" : 
-                                                         getRadioButtonStatus("type1") === false ? "No" : "N/A",
-            "Non-CALR/MPL driver mutation genotype": getRadioButtonStatus("calr") === true ? "Yes" : 
-                                                   getRadioButtonStatus("calr") === false ? "No" : "N/A",
-            "HMR mutation": getRadioButtonStatus("hmr") === true ? "Yes" : 
-                          getRadioButtonStatus("hmr") === false ? "No" : "N/A",
-            "HMR2 mutation": getRadioButtonStatus("hmr2") === true ? "Yes" : 
-                           getRadioButtonStatus("hmr2") === false ? "No" : "N/A",
-            "HMR-U2 mutation": getRadioButtonStatus("hmru2") === true ? "Yes" : 
-                             getRadioButtonStatus("hmru2") === false ? "No" : "N/A",
-            "HMR2-U2 mutation": getRadioButtonStatus("hmr2u2") === true ? "Yes" : 
-                              getRadioButtonStatus("hmr2u2") === false ? "No" : "N/A",
-            "ASXL1/SRSF2/EZH2/IDH1/2 mutation": getRadioButtonStatus("as") === true ? "Yes" : 
-                                               getRadioButtonStatus("as") === false ? "No" : "N/A",
-            "Unfavourable by DIPSS plus": getRadioButtonStatus("dip") === true ? "Yes" : 
-                                        getRadioButtonStatus("dip") === false ? "No" : "N/A",
-            "Unfavourable by MIPSS70 plus v. 2.0": getRadioButtonStatus("unmip") === true ? "Yes" : 
-                                                 getRadioButtonStatus("unmip") === false ? "No" : "N/A",
-            "V-High risk by MIPSS70 plus v. 2.0": getRadioButtonStatus("vmip") === true ? "Yes" : 
-                                                getRadioButtonStatus("vmip") === false ? "No" : "N/A",
-            "BMF grade ≥ 2": getRadioButtonStatus("bmf") === true ? "Yes" : 
-                           getRadioButtonStatus("bmf") === false ? "No" : "N/A"
-        };
+        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 15, { align: 'center' });
 
-        // Convert inputs to table data
-        const tableData = Object.entries(inputs).map(([key, value]) => [key, value]);
-        
-        // Add clinical features table
+        let startY = 20;
+
+        // Clinical Features Section
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(31, 41, 55);
+        doc.text('Clinical Features', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const clinicalFeatures = [
+            ["Age (y)", document.getElementById("age").value || "N/A"],
+            ["Gender", document.getElementById("gender-male").checked ? "Male" : 
+                     document.getElementById("gender-female").checked ? "Female" : "N/A"],
+            ["Constitutional Symptoms", getRadioButtonStatus("cs") === true ? "Yes" : 
+                                     getRadioButtonStatus("cs") === false ? "No" : "N/A"],
+            ["RBC transfusions need", getRadioButtonStatus("rbc") === true ? "Yes" : 
+                                   getRadioButtonStatus("rbc") === false ? "No" : "N/A"],
+            ["Karnofsky <90%", getRadioButtonStatus("knf") === true ? "Yes" : 
+                             getRadioButtonStatus("knf") === false ? "No" : "N/A"],
+            ["HLA-mismatched unrelated donor", getRadioButtonStatus("mmud") === true ? "Yes" : 
+                                            getRadioButtonStatus("mmud") === false ? "No" : "N/A"]
+        ];
+
         doc.autoTable({
-            startY: 40,
-            head: [['Feature', 'Value']],
-            body: tableData,
+            startY: startY + 4,
+            body: clinicalFeatures,
             theme: 'grid',
-            headStyles: { fillColor: [37, 99, 235] },
-            styles: { fontSize: 8 },
-            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 50 } },
-            margin: { left: 15, right: 15 }
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
         });
 
-        // Add results section
-        doc.setFontSize(12);
-        doc.text('Results', 15, doc.autoTable.previous.finalY + 10);
+        // Complete Blood Count Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Complete Blood Count', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
 
-        // Get results
-        const results = {
-            "DIPSS": document.getElementById("dipss").textContent,
-            "DIPSS-Plus": document.getElementById("dipss-plus").textContent,
-            "MIPSS70": document.getElementById("mips").textContent,
-            "MIPSS70 plus version 2.0": document.getElementById("mips-plus").textContent,
-            "MTSS": document.getElementById("mtss").textContent
-        };
+        const bloodCount = [
+            ["Hb (g/dl)", document.getElementById("hb").value || "N/A"],
+            ["WBC > 25x10⁹/l", getRadioButtonStatus("wbc") === true ? "Yes" : 
+                             getRadioButtonStatus("wbc") === false ? "No" : "N/A"],
+            ["Blasts (%)", document.getElementById("blasts").value || "N/A"],
+            ["PLT (x10⁹/l)", document.getElementById("plt").value || "N/A"]
+        ];
 
-        // Convert results to table data
-        const resultsData = Object.entries(results).map(([key, value]) => [key, value]);
-
-        // Add results table
         doc.autoTable({
-            startY: doc.autoTable.previous.finalY + 15,
+            startY: startY + 4,
+            body: bloodCount,
+            theme: 'grid',
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
+        });
+
+        // Driver Mutations Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Driver Mutations Status', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const driverMutations = [
+            ["Absence of type 1/type 1 like CALR mutation", getRadioButtonStatus("type1") === true ? "Yes" : 
+                                                         getRadioButtonStatus("type1") === false ? "No" : "N/A"],
+            ["Non-CALR/MPL driver mutation genotype", getRadioButtonStatus("calr") === true ? "Yes" : 
+                                                   getRadioButtonStatus("calr") === false ? "No" : "N/A"]
+        ];
+
+        doc.autoTable({
+            startY: startY + 4,
+            body: driverMutations,
+            theme: 'grid',
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
+        });
+
+        // Additional Myeloid Mutations Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Additional Myeloid Mutations', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const myeloidMutations = [
+            ["HMR mutation", getRadioButtonStatus("hmr") === true ? "Yes" : 
+                          getRadioButtonStatus("hmr") === false ? "No" : "N/A"],
+            ["HMR2 mutation", getRadioButtonStatus("hmr2") === true ? "Yes" : 
+                           getRadioButtonStatus("hmr2") === false ? "No" : "N/A"],
+            ["HMR-U2 mutation", getRadioButtonStatus("hmru2") === true ? "Yes" : 
+                             getRadioButtonStatus("hmru2") === false ? "No" : "N/A"],
+            ["HMR2-U2 mutation", getRadioButtonStatus("hmr2u2") === true ? "Yes" : 
+                              getRadioButtonStatus("hmr2u2") === false ? "No" : "N/A"],
+            ["ASXL1/SRSF2/EZH2/IDH1/2 mutation", getRadioButtonStatus("as") === true ? "Yes" : 
+                                               getRadioButtonStatus("as") === false ? "No" : "N/A"]
+        ];
+
+        doc.autoTable({
+            startY: startY + 4,
+            body: myeloidMutations,
+            theme: 'grid',
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
+        });
+
+        // Cytogenetics Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Cytogenetics', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const cytogenetics = [
+            ["Unfavourable by DIPSS plus", getRadioButtonStatus("dip") === true ? "Yes" : 
+                                        getRadioButtonStatus("dip") === false ? "No" : "N/A"],
+            ["Unfavourable by MIPSS70 plus v. 2.0", getRadioButtonStatus("unmip") === true ? "Yes" : 
+                                                 getRadioButtonStatus("unmip") === false ? "No" : "N/A"],
+            ["V-High risk by MIPSS70 plus v. 2.0", getRadioButtonStatus("vmip") === true ? "Yes" : 
+                                                getRadioButtonStatus("vmip") === false ? "No" : "N/A"]
+        ];
+
+        doc.autoTable({
+            startY: startY + 4,
+            body: cytogenetics,
+            theme: 'grid',
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
+        });
+
+        // Histopathology Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Histopathology', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const histopathology = [
+            ["BMF grade ≥ 2", getRadioButtonStatus("bmf") === true ? "Yes" : 
+                           getRadioButtonStatus("bmf") === false ? "No" : "N/A"]
+        ];
+
+        doc.autoTable({
+            startY: startY + 4,
+            body: histopathology,
+            theme: 'grid',
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 100 },
+                1: { cellWidth: 50 }
+            },
+            margin: { left: 27.5, right: 27.5 }
+        });
+
+        // Results Section
+        startY = doc.autoTable.previous.finalY + 6;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Results', 105, startY, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+
+        const results = [
+            ["DIPSS", document.getElementById("dipss").textContent],
+            ["DIPSS-Plus", document.getElementById("dipss-plus").textContent],
+            ["MIPSS70", document.getElementById("mips").textContent],
+            ["MIPSS70 plus version 2.0", document.getElementById("mips-plus").textContent],
+            ["MTSS", document.getElementById("mtss").textContent]
+        ];
+
+        doc.autoTable({
+            startY: startY + 4,
             head: [['Score', 'Result']],
-            body: resultsData,
+            body: results,
             theme: 'grid',
-            headStyles: { fillColor: [37, 99, 235] },
-            styles: { fontSize: 8 },
-            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 50 } },
-            margin: { left: 15, right: 15 }
+            headStyles: { 
+                fillColor: [37, 99, 235],
+                textColor: [255, 255, 255],
+                fontSize: 8,
+                fontStyle: 'bold'
+            },
+            styles: { 
+                fontSize: 8,
+                cellPadding: 2,
+                lineWidth: 0.1
+            },
+            columnStyles: { 
+                0: { cellWidth: 50 },
+                1: { cellWidth: 100 }
+            },
+            margin: { left: 27.5, right: 27.5 }
         });
+
+        // Add footer
+        doc.setFontSize(7);
+        doc.setTextColor(102, 102, 102);
+        doc.text('https://pmf-scores-calculator.com', 105, 285, { align: 'center' });
 
         // Save the PDF
         doc.save('PMF_Scores_Results.pdf');
