@@ -1,5 +1,5 @@
 {
-  "name": "PMF Scores Calculator",
+  "name": "PMF Calculator",
   "short_name": "PMF Calculator",
   "description": "Calculate Primary Myelofibrosis (PMF) prognostic scores",
   "start_url": "/",
@@ -8,9 +8,21 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "/imgs/pmf.ico",
+      "src": "/imgs/favicon.png",
       "sizes": "64x64",
-      "type": "image/x-icon"
+      "type": "image/png"
+    },
+    {
+      "src": "/imgs/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/imgs/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 } 
